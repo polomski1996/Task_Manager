@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+
+        <div class="button-group">
+            <button class="filter-button" data-filter="today">Today's Tasks</button>
+            <button class="filter-button" data-filter="all">All Tasks</button>
+            <button class="filter-button" data-filter="parent">Parent Tasks</button>
+        </div>
+
+        <table id="todo-table">
+            <thead>
+                <tr>
+                    <th>Done</th>
+                    <th>Task Name</th>
+                    <th>Parent Task</th>
+                    <th>Acceptance Criteria</th>
+                    <th>Start Hour</th>
+                    <th>Estimated Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="task-row today">
+                    <td><input type="checkbox"></td>
+                    <td>Grocery Shopping</td>
+                    <td>Household Chores</td>
+                    <td>All items on the list are purchased.</td>
+                    <td>9:00 AM</td>
+                    <td>1 hour</td>
+                </tr>
+                <tr class="task-row all parent">
+                    <td><input type="checkbox"></td>
+                    <td>Household Chores</td>
+                    <td>N/A</td>
+                    <td>All chores are completed.</td>
+                    <td>N/A</td>
+                    <td>3 hours</td>
+                </tr>
+                <tr class="task-row all">
+                    <td><input type="checkbox"></td>
+                    <td>Submit Project Report</td>
+                    <td>Project X</td>
+                    <td>Report is reviewed and accepted by the manager.</td>
+                    <td>2:00 PM</td>
+                    <td>2 hours</td>
+                </tr>
+                <tr class="task-row today">
+                    <td><input type="checkbox"></td>
+                    <td>Book Doctor Appointment</td>
+                    <td>Health</td>
+                    <td>Appointment is scheduled for next week.</td>
+                    <td>10:00 AM</td>
+                    <td>30 minutes</td>
+                </tr>
+                <tr class="task-row all parent">
+                    <td><input type="checkbox"></td>
+                    <td>Project X</td>
+                    <td>N/A</td>
+                    <td>All tasks related to Project X are completed.</td>
+                    <td>N/A</td>
+                    <td>8 hours</td>
+                </tr>
+                <tr class="task-row all">
+                    <td><input type="checkbox"></td>
+                    <td>Pay Bills</td>
+                    <td>Finances</td>
+                    <td>All utility bills are paid before the due date.</td>
+                    <td>5:00 PM</td>
+                    <td>1 hour</td>
+                </tr>
+                <tr class="task-row parent">
+                    <td><input type="checkbox"></td>
+                    <td>Finances</td>
+                    <td>N/A</td>
+                    <td>Monthly financial tasks are completed.</td>
+                    <td>N/A</td>
+                    <td>2 hours</td>
+                </tr>
+
+                <tr class="task-row">
+                    <td><input type="checkbox"></td>
+                    <td>Write Blog Post</td>
+                    <td>Content Creation</td>
+                    <td>Blog post is published on the website.</td>
+                    <td>11:00 AM</td>
+                    <td>3 hours</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

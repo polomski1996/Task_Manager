@@ -1,0 +1,102 @@
+body {
+    font-family: sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #bb86fc; /* Purple accent color */
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-button {
+    background-color: #3700b3; /* Darker purple */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #bb86fc; /* Lighter purple */
+}
+
+
+/* Table Styles */
+#todo-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#todo-table th,
+#todo-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+#todo-table th {
+    background-color: #282828;
+    font-weight: bold;
+    color: #eee;
+}
+
+#todo-table tbody tr:nth-child(even) {
+    background-color: #252525;
+}
+
+#todo-table input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+}
+
+/* Simulated Filtering with CSS Classes (No JavaScript) */
+/* By default, show all */
+.task-row {
+    display: table-row; /* Make sure rows are visible by default */
+}
+
+/* To show all, uncomment these lines
+.task-row:not(.today) {
+  display:none;
+}
+
+.task-row:not(.all) {
+    display:none;
+}
+.task-row:not(.parent) {
+  display: none;
+}
+*/
+
+/*  Need JS for real filtering to change these classes*/
+/*  or you can toggle them manually in dev tools for testing*/
