@@ -105,6 +105,47 @@
             </tbody>
         </table>
     </div>
+    <br/>
+    <!-- Formularz dodawania zadania -->
+<div id="task-form-container" style="margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+    <h3>Dodaj nowe zadanie</h3>
+    <form id="task-form">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+            <div>
+                <label>Nazwa zadania:</label>
+                <input type="text" id="task-name" required style="width: 100%; padding: 5px;">
+            </div>
+            <div>
+                <label>Zadanie nadrzędne:</label>
+                <select id="parent-task" style="width: 100%; padding: 5px;">
+                    <option value="">Brak (zadanie główne)</option>
+                </select>
+            </div>
+            <div>
+                <label>Kryteria akceptacji:</label>
+                <textarea id="acceptance-criteria" style="width: 100%; padding: 5px; height: 60px;"></textarea>
+            </div>
+            <div>
+                <label>Godzina rozpoczęcia:</label>
+                <input type="time" id="start-hour" style="width: 100%; padding: 5px;">
+            </div>
+            <div>
+                <label>Szacowany czas:</label>
+                <input type="text" id="estimated-time" placeholder="np. 1 hour, 30 minutes" style="width: 100%; padding: 5px;">
+            </div>
+            <div>
+                <label>Data:</label>
+                <input type="date" id="task-date" required style="width: 100%; padding: 5px;">
+            </div>
+        </div>
+        <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
+            Dodaj zadanie
+        </button>
+    </form>
+</div>
+
+
     <script src="script.js"></script>
+    <script src="api.js"></script>
 </body>
 </html>
