@@ -33,6 +33,16 @@ class TaskManager {
                 this.filterTasks(filter);
             });
         });
+
+        // Add task button - show form
+        document.querySelector('.add-task').addEventListener('click', function() {
+            document.querySelector('.task-form-container').classList.remove('hidden');
+        });
+
+        // Finish add button - hide form
+        document.querySelector('.finish-add-button').addEventListener('click', function() {
+            document.querySelector('.task-form-container').classList.add('hidden');
+        });
     }
 
     async loadTasks() {
