@@ -1,5 +1,13 @@
+:root{
+    --font-family: "Oswald", sans-serif;
+    --font-falmily-2: 'Courier New', Courier, monospace;
+    --font-color: rgb(214, 213, 213);
+    --bgc-color: rgb(31, 43, 44);
+    --border-width: .2em;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: var(--font-family);
     background-color: #121212;
     color: #ffffff;
     margin: 0;
@@ -14,7 +22,7 @@ body {
     width: 80%;
     max-width: 1200px;
     padding: 20px;
-    background-color: #1e1e1e;
+    background-color: var(--bgc-color);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
@@ -35,19 +43,23 @@ h1 {
 
 .filter-button,
 .add-task{
-    background-color: #3700b3; /* Darker purple */
-    color: white;
-    border: none;
+    background-color: #242424; /* Darker purple */
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    font-size: 1em;
+    color: var(--font-color);
+    border: 0em;
     padding: 10px 20px;
     margin: 5px; /* Reduced margin for better spacing on smaller screens */
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .filter-button:hover,
 .add-task:hover {
-    background-color: #bb86fc; /* Lighter purple */
+    background-color: var(--bgc-color); /* Lighter purple */
+    border: var(--font-color) var(--border-width) solid;
 }
 
 
@@ -56,6 +68,7 @@ h1 {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-family: var(--font-falmily-2);
 }
 
 #todo-table th,
@@ -66,9 +79,10 @@ h1 {
 }
 
 #todo-table th {
-    background-color: #282828;
+    background-color: var(--bgc-color);
     font-weight: bold;
     color: #eee;
+    border: var(--border-width) solid var(--font-color);
 }
 
 #todo-table tbody tr:nth-child(even) {
