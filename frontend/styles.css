@@ -3,7 +3,8 @@
     --font-falmily-2: 'Courier New', Courier, monospace;
     --font-color: rgb(214, 213, 213);
     --bgc-color: rgb(31, 43, 44);
-    --border-width: .2em;
+    --border-width: .01em;
+    --border-rad: 10px;
 }
 
 body {
@@ -23,7 +24,7 @@ body {
     max-width: 1200px;
     padding: 20px;
     background-color: var(--bgc-color);
-    border-radius: 8px;
+    border-radius: var(--border-rad);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -36,6 +37,7 @@ h1 {
 /* Button Group */
 .button-group {
     display: flex;
+    box-sizing: border-box;
     justify-content: center;
     margin-bottom: 20px;
     flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
@@ -48,10 +50,10 @@ h1 {
     font-weight: 700;
     font-size: 1em;
     color: var(--font-color);
-    border: 0em;
+    border: transparent var(--border-width) solid;
     padding: 10px 20px;
-    margin: 5px; /* Reduced margin for better spacing on smaller screens */
-    border-radius: 4px;
+    margin: 10px; /* Reduced margin for better spacing on smaller screens */
+    border-radius: var(--border-rad);
     cursor: pointer;
     transition: 0.3s;
 }
@@ -66,23 +68,32 @@ h1 {
 /* Table Styles */
 #todo-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; /* MUSI być separate dla border-radius */
+    border-spacing: 0; /* Usuń odstępy między komórkami */
     margin-top: 20px;
     font-family: var(--font-falmily-2);
 }
 
-#todo-table th,
-#todo-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #333;
+#todo-table th:first-child {
+    border: var(--font-color) var(--border-width) solid;
+    border-top-left-radius: var(--border-rad);
+    border-bottom-left-radius: var(--border-rad);
+}
+
+#todo-table th:last-child {
+    border: var(--font-color) var(--border-width) solid;
+    border-top-right-radius: var(--border-rad);
+    border-bottom-right-radius: var(--border-rad);
 }
 
 #todo-table th {
     background-color: var(--bgc-color);
     font-weight: bold;
-    color: #eee;
-    border: var(--border-width) solid var(--font-color);
+    color: var(--font-color);
+    padding: 12px 15px;
+    text-align: left;
+    border: var(--font-color) var(--border-width) solid;
+    border-right: 0.01em;
 }
 
 #todo-table tbody tr:nth-child(even) {
