@@ -44,7 +44,8 @@ h1 {
 }
 
 .filter-button,
-.add-task{
+.add-task,
+.task-form-container #task-form button {
     background-color: #242424; /* Darker purple */
     font-family: 'Courier New', Courier, monospace;
     font-weight: 700;
@@ -59,7 +60,8 @@ h1 {
 }
 
 .filter-button:hover,
-.add-task:hover {
+.add-task:hover,
+.task-form-container #task-form button:hover{
     background-color: var(--bgc-color); /* Lighter purple */
     border: var(--font-color) var(--border-width) solid;
 }
@@ -107,6 +109,34 @@ h1 {
     height: 20px;
 }
 
+/* ADD TASK FORM */
+.task-form-container {
+    background-color: var(--bgc-color);
+    color: var(--font-color);
+    border: var(--font-color) var(--border-width) solid;
+    border-radius: var(--border-rad);
+    font-family: var(--font-falmily-2);
+    margin: 20px 0;
+    padding: 40px;
+}
+
+.task-form-container #task-form #inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.task-form-container #task-form #inputs input,
+.task-form-container #task-form #inputs select,
+.task-form-container #task-form #inputs textarea {
+    padding: 5px;
+    width: 100%;
+}
+.task-form-container #task-form #inputs textarea {
+    height: 70px;
+}
+
+/* FUNCTIONAL CLASSES */
 .hidden {
     display: none !important; /* Use !important to override any other display styles */
 }
