@@ -36,11 +36,13 @@ class TaskManager {
 
         // Add task button - show form
         document.querySelector('.add-task').addEventListener('click', function() {
+            document.body.classList.add('blured');
             document.querySelector('.task-form-container').classList.remove('hidden');
         });
 
         // Finish add button - hide form
         document.querySelector('.finish-add-button').addEventListener('click', function() {
+            document.body.classList.remove('blured');
             document.querySelector('.task-form-container').classList.add('hidden');
         });
     }

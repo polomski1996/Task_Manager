@@ -111,6 +111,10 @@ h1 {
 
 /* ADD TASK FORM */
 .task-form-container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--bgc-color);
     color: var(--font-color);
     border: var(--font-color) var(--border-width) solid;
@@ -118,6 +122,10 @@ h1 {
     font-family: var(--font-falmily-2);
     margin: 20px 0;
     padding: 40px;
+
+    backdrop-filter: blur(5px);
+    background: rgba(0,0,0,0.3);
+    z-index: 1000;
 }
 
 .task-form-container #task-form #inputs {
@@ -139,6 +147,11 @@ h1 {
 /* FUNCTIONAL CLASSES */
 .hidden {
     display: none !important; /* Use !important to override any other display styles */
+}
+
+.blured {
+    filter: blur(5%);
+    overflow: hidden;
 }
 
 /* Simulated Filtering with CSS Classes (No JavaScript) */
