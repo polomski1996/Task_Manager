@@ -1,112 +1,134 @@
 :root{
-    --font-family: "Oswald", sans-serif;
-    --font-falmily-2: 'Courier New', Courier, monospace;
-    --font-color: rgb(214, 213, 213);
+    --font-family: "Inter", sans-serif;
+    --font-family-mono: "Courier New", Courier, monospace;
+    --font-color: rgb(230, 230, 230);
     --bgc-color: rgb(31, 43, 44);
-    --border-width: .01em;
-    --border-rad: 10px;
+    --border-width: 1px;
+    --border-color: rgb(180, 180, 180);
+    --border-rad: 8px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: .6rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
     font-family: var(--font-family);
     background-color: #121212;
-    color: #ffffff;
+    color: var(--font-color);
     margin: 0;
-    padding: 0;
+    padding: var(--spacing-sm);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
+    line-height: 1.5;
+    height: 100%;
 }
 
 .container {
-    width: 80%;
-    max-width: 1200px;
-    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    padding: var(--spacing-md);
     background-color: var(--bgc-color);
     border-radius: var(--border-rad);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
-h1 {
+h1, h3 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #bb86fc; /* Purple accent color */
+    margin-bottom: var(--spacing-md);
+    color: var(--font-color);
+    font-weight: 500;
 }
 
 /* Button Group */
 .button-group {
     display: flex;
-    box-sizing: border-box;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-xs);
     justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    height: 15%;
 }
 
 .filter-button,
 .add-task,
 .task-form-container #task-form button {
-    background-color: #242424; /* Darker purple */
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 700;
-    font-size: 1em;
+    background-color: #242424;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 0.9rem;
     color: var(--font-color);
-    border: transparent var(--border-width) solid;
-    padding: 10px 20px;
-    margin: 10px; /* Reduced margin for better spacing on smaller screens */
+    border: var(--border-width) solid var(--border-color);
+    padding: 0.75rem 1.5rem;
     border-radius: var(--border-rad);
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 140px;
+    max-width: 200px;
+    /* max-height: 3em; */
 }
 
 .filter-button:hover,
 .add-task:hover,
 .task-form-container #task-form button:hover{
-    background-color: var(--bgc-color); /* Lighter purple */
-    border: var(--font-color) var(--border-width) solid;
+    background-color: rgba(168, 240, 240, 0.1);
+    border-color: rgba(231, 240, 235, 0.3);
+    transform: translateY(-1px);
 }
-
 
 /* Table Styles */
 #todo-table {
     width: 100%;
-    border-collapse: separate; /* MUSI być separate dla border-radius */
-    border-spacing: 0; /* Usuń odstępy między komórkami */
-    margin-top: 20px;
-    font-family: var(--font-falmily-2);
-}
-
-#todo-table th:first-child {
-    border: var(--font-color) var(--border-width) solid;
-    border-top-left-radius: var(--border-rad);
-    border-bottom-left-radius: var(--border-rad);
-}
-
-#todo-table th:last-child {
-    border: var(--font-color) var(--border-width) solid;
-    border-top-right-radius: var(--border-rad);
-    border-bottom-right-radius: var(--border-rad);
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: var(--spacing-md);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-rad);
+    overflow: hidden;
 }
 
 #todo-table th {
-    background-color: var(--bgc-color);
-    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: 600;
     color: var(--font-color);
-    padding: 12px 15px;
+    padding: var(--spacing-sm);
     text-align: left;
-    border: var(--font-color) var(--border-width) solid;
-    border-right: 0.01em;
+    border-bottom: var(--border-width) solid var(--border-color);
+    white-space: nowrap;
 }
 
-#todo-table tbody tr:nth-child(even) {
-    background-color: #252525;
+#todo-table td {
+    padding: var(--spacing-sm);
+    height: 1.4em;
+    border-bottom: var(--border-width) solid var(--border-color);
+    background-color: transparent;
+}
+
+#todo-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#todo-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 #todo-table input[type="checkbox"] {
-    margin: 0;
-    padding: 0;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 /* ADD TASK FORM */
@@ -115,208 +137,238 @@ h1 {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--bgc-color);
+    background: rgba(31, 43, 44, 0.95);
     color: var(--font-color);
-    border: var(--font-color) var(--border-width) solid;
+    border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-rad);
-    font-family: var(--font-falmily-2);
-    margin: 20px 0;
-    padding: 40px;
-
-    backdrop-filter: blur(5px);
-    background: rgba(0,0,0,0.3);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: var(--spacing-lg);
+    backdrop-filter: blur(10px);
     z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.task-form-container h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
 }
 
 .task-form-container #task-form #inputs {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 30px;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
 }
+
+.task-form-container #task-form #inputs > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-form-container #task-form label {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
 .task-form-container #task-form #inputs input,
 .task-form-container #task-form #inputs select,
 .task-form-container #task-form #inputs textarea {
-    padding: 5px;
+    padding: 0.75rem;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-rad);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--font-color);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
     width: 100%;
+    transition: border-color 0.3s ease;
 }
+
+.task-form-container #task-form #inputs input:focus,
+.task-form-container #task-form #inputs select:focus,
+.task-form-container #task-form #inputs textarea:focus {
+    outline: none;
+    border-color: rgba(187, 134, 252, 0.5);
+}
+
 .task-form-container #task-form #inputs textarea {
-    height: 70px;
+    height: 80px;
+    resize: vertical;
+}
+
+.task-form-container #task-form button {
+    margin: var(--spacing-xs) var(--spacing-xs) 0 0;
+    min-width: 120px;
 }
 
 /* FUNCTIONAL CLASSES */
 .hidden {
-    display: none !important; /* Use !important to override any other display styles */
+    display: none !important;
 }
-
-.blured {
-    filter: blur(5%);
-    overflow: hidden;
-}
-
-/* Simulated Filtering with CSS Classes (No JavaScript) */
-/* By default, show all */
-.task-row {
-    display: table-row; /* Make sure rows are visible by default */
-}
-
-/* To show all, uncomment these lines
-.task-row:not(.today) {
-  display:none;
-}
-
-.task-row:not(.all) {
-    display:none;
-}
-.task-row:not(.parent) {
-  display: none;
-}
-*/
-
-/*  Need JS for real filtering to change these classes*/
-/*  or you can toggle them manually in dev tools for testing*/
-
 
 /* Media Queries for Responsiveness */
 
-/* For laptops and larger screens (default styles above apply) */
-@media (min-width: 1200px) {
+/* For large desktops */
+@media (min-width: 1400px) {
     .container {
-        width: 80%;
-        max-width: 1200px;
+        padding: var(--spacing-lg);
     }
 }
 
-/* For iPads and smaller tablets (768px - 1199px) */
-@media (min-width: 768px) and (max-width: 1199px) {
-    .container {
-        width: 90%;
+/* For laptops and larger screens */
+@media (min-width: 1024px) {
+    .task-form-container #task-form #inputs {
+        grid-template-columns: 1fr 1fr;
     }
+    
+    .task-form-container #task-form #inputs > div:nth-last-child(3):first-child,
+    .task-form-container #task-form #inputs > div:nth-last-child(3):first-child ~ div {
+        grid-column: span 2;
+    }
+}
 
+/* For iPads and smaller tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: var(--spacing-md);
+    }
+    
+    #todo-table {
+        font-size: 0.85rem;
+    }
+    
     #todo-table th,
     #todo-table td {
-        padding: 8px 10px;
-        font-size: 0.9em;
+        padding: 0.55rem;
     }
+}
 
+/* For smaller tablets and larger phones (600px - 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+    body {
+        padding: var(--spacing-xs);
+    }
+    
+    .container {
+        padding: var(--spacing-sm);
+        width: 100%;
+    }
+    
+    .button-group {
+        gap: .5rem;
+    }
+    
     .filter-button,
     .add-task {
-        padding: 8px 16px;
-        font-size: 0.9em;
+        min-width: 120px;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    #todo-table-wrapper {
+        overflow-x: auto;
+        border: var(--border-width) solid var(--border-color);
+        border-radius: var(--border-rad);
+    }
+    
+    #todo-table {
+        min-width: 700px;
+        font-size: 0.8rem;
+    }
+    
+    #todo-table th,
+    #todo-table td {
+        padding: 0.4rem;
     }
 }
 
-/* For smaller tablets and larger phones (480px - 767px) */
-@media (min-width: 480px) and (max-width: 767px) {
+/* For mobile devices (up to 599px) */
+@media (max-width: 599px) {
+    body {
+        padding: 0.5rem;
+        align-items: stretch;
+    }
+    
     .container {
+        padding: 1rem;
+        width: 100%;
+        border-radius: 6px;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .filter-button,
+    .add-task {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    #todo-table-wrapper {
+        overflow-x: auto;
+        border: var(--border-width) solid var(--border-color);
+        border-radius: 6px;
+        margin-top: 1rem;
+    }
+    
+    #todo-table {
+        min-width: 650px;
+        font-size: 0.75rem;
+        border: none;
+    }
+    
+    #todo-table th,
+    #todo-table td {
+        padding: 0.5rem;
+    }
+    
+    .task-form-container {
+        padding: 1.5rem;
         width: 95%;
+        max-height: 85vh;
     }
-
-    h1 {
-        font-size: 1.8em;
-    }
-
-    .button-group {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center;
-    }
-
-    .filter-button,
-    .add-task{
-        width: 80%; /* Make buttons wider */
-        margin: 5px 0;
-    }
-
-    #todo-table {
-        display: block; /* Allows scrolling */
-        overflow-x: auto; /* Horizontal scroll if table is too wide */
-    }
-
-    #todo-table thead {
-        display: table; /* Restore thead display */
+    
+    .task-form-container #task-form button {
         width: 100%;
-        table-layout: fixed; /* Ensure thead columns align with tbody */
-    }
-
-    #todo-table tbody {
-        display: block;
-        width: 100%;
-        overflow-x: auto; /* Horizontal scroll if table is too wide */
-    }
-
-    #todo-table tr {
-        display: table-row;
-        width: 100%;
-    }
-
-    #todo-table th,
-    #todo-table td {
-        padding: 6px 8px;
-        font-size: 0.8em;
-        white-space: nowrap; /* Prevent text from wrapping in cells */
+        margin: 0.25rem 0;
     }
 }
 
-/* For iPhones and smaller mobile devices (up to 479px) */
-@media (max-width: 479px) {
+/* For very small mobile devices (up to 375px) */
+@media (max-width: 375px) {
+    body {
+        padding: 0.25rem;
+    }
+    
     .container {
-        width: 100%;
-        padding: 10px;
+        padding: 0.75rem;
     }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    .button-group {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: center;
-    }
-
-    .filter-button,
-    .add-task{
-        width: 90%; /* Make buttons even wider */
-        margin: 5px 0;
-        padding: 8px;
-        font-size: 0.85em;
-    }
-
+    
     #todo-table {
-        display: block;
-        overflow-x: auto; /* Enable horizontal scrolling */
+        min-width: 600px;
+        font-size: 0.7rem;
     }
-
-    #todo-table thead {
-        display: table; /* Restore thead display */
-        width: 100%;
-        table-layout: fixed; /* Ensure thead columns align with tbody */
-    }
-
-    #todo-table tbody {
-        display: block;
-        width: 100%;
-        overflow-x: auto; /* Enable horizontal scrolling */
-    }
-
-    #todo-table tr {
-        display: table-row;
-        width: 100%;
-    }
+    
     #todo-table th,
     #todo-table td {
-        padding: 4px 6px;
-        font-size: 0.75em;
-        white-space: nowrap; /* Prevent text from wrapping in cells */
+        padding: 0.4rem;
     }
-
-    /* In the media queries for smaller screens: */
-    #todo-table th,
-    #todo-table td {
-        padding: 4px 6px;
-        font-size: 0.7em; /* Adjust font size as needed */
-        white-space: nowrap; /* Keep text on one line */
+    
+    .task-form-container {
+        padding: 1rem;
     }
-
-    /* If the table is still too wide on small screens, consider reducing padding further or reducing font sizes. */
-
 }
