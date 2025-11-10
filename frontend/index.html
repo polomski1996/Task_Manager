@@ -11,17 +11,32 @@
 </head>
 <body>
     <div class="container">
-        <!-- WEEKLY TARGETS -->
-        <div class="week-targets">
-
-        </div>
-
-        <!-- BUTTON GROUP -->
-        <div class="button-group">
-            <button class="filter-button" data-filter="today">Today's Tasks</button>
-            <button class="filter-button" data-filter="all">All Tasks</button>
-            <button class="filter-button" data-filter="parent">Parent Tasks</button>
-            <button class="add-task">Add Task</button>
+        <div class="Control-Panel">
+            <!-- WEEKLY TARGETS -->
+            <div class="week-targets">
+                <h3>WEEK TARGETS</h3>
+                <div class="targets-content">
+                    <!-- Tutaj dodaj zawartość progress barów lub innych elementów -->
+                    <p>Weekly progress content</p>
+                </div>
+            </div>
+            
+            <!-- PARENT TASKS -->
+            <div class="parent-tasks">
+                <h3>PARENT TASKS</h3>
+                <div class="parent-content">
+                    <!-- Tutaj dodaj zawartość parent tasks -->
+                    <p>Parent tasks content</p>
+                </div>
+            </div>
+            
+            <!-- BUTTON GROUP -->
+            <div class="button-group">
+                <button class="filter-button" data-filter="today">Today's Tasks</button>
+                <button class="filter-button" data-filter="all">All Tasks</button>
+                <button class="filter-button" data-filter="parent">Parent Tasks</button>
+                <button class="add-task">Add Task</button>
+            </div>
         </div>
 
         <table id="todo-table">
