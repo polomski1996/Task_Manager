@@ -4,8 +4,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Task
-from .serializers import TaskSerializer
+from .models import Task, Week_Target
+from .serializers import TaskSerializer, Week_TargetSerializer
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
@@ -27,3 +27,13 @@ class TaskViewSet(viewsets.ModelViewSet):
         task.is_done = not task.is_done
         task.save()
         return Response({'status': 'done toggled', 'is_done': task.is_done})
+    
+class WeekTargetViewSet(viewsets.ModelViewSet):
+    queryset = Week_Target.objects.all()
+    serializer_class = Week_TargetSerializer
+
+
+    def get_queryset(self):
+        queryset = Week_Target.objects.all()
+        
+        return queryset

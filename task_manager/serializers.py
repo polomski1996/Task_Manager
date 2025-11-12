@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Task
+from .models import Task, Week_Target
 
+#serialize for Task
 class TaskSerializer(serializers.ModelSerializer):
     parent_task_name = serializers.CharField(source='parent_task.name', read_only=True, allow_null=True)
     
@@ -21,3 +22,12 @@ class TaskSerializer(serializers.ModelSerializer):
         # Format date for display
         # representation['date'] = instance.date.strftime('%d.%m.%Y')
         return representation
+    
+#serializer for Week_Target
+class Week_TargetSerializer(serializers.ModelSerializer):
+    tasks = TaskSerializer(many = True, read_only = True)
+    percent = serializers.ReadOnlyField() #coumputed field
+
+    class Meta:
+        model = Week_Target
+        fields = ['id', 'name', 'tasks', 'percent', 'deadline', 'is_done']
