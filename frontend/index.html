@@ -58,11 +58,11 @@
     </div>
     <br/>
 
-
     <!-- adding task form-->
     <div class="task-form-container hidden" >
-        <h3>Add Task</h3>
+        <!-- ADD TASK FORM -->
         <form id="task-form">
+            <h3>Add Task</h3>
             <div id="inputs" >
                 <div>
                     <label>Task Name:</label>
@@ -92,11 +92,40 @@
                 </div>
             </div>
             <button type="submit" >
-                Add to Schedule
+                Add Task
+            </button>
+        </form>
+        <br>
+        <!-- ADD WEEK TARGET FORM -->
+        <form id="task-form">
+            <h3>Add Week Target</h3>
+            <div id="inputs" >
+                <div>
+                    <label>Target Name:</label>
+                    <input type="text" id="target-name" >
+                </div>
+                <div>
+                    <label>Parent Task:</label>
+                    <select id="parent-task">
+                        <option value="">Brak (zadanie główne)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Description:</label>
+                    <textarea id="description"></textarea>
+                </div>
+                <div>
+                    <label>Deadline:</label>
+                    <input type="date" id="deadline-date" required >
+                </div>
+            </div>
+            <button type="submit" >
+                Add Target
             </button>
             <button class="finish-add-button" >
-                Finish adding
+                Quit
             </button>
+            
         </form>
     </div>
 

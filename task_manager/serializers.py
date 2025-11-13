@@ -30,4 +30,4 @@ class Week_TargetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Week_Target
-        fields = ['id', 'name', 'tasks', 'percent', 'deadline', 'is_done']
+        fields = ['id', 'name', 'description', 'tasks', 'percent', 'deadline', 'is_done']
