@@ -12,11 +12,17 @@ class TaskManager {
     }
 
     setupEventListeners() {
-        // Form submission
+        // Form submission - task
         document.getElementById('task-form').addEventListener('submit', (e) => {
             e.preventDefault();
             this.createTask();
         });
+
+        // Form submission - Week Target
+        document.getElementById('target-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.createTarget();
+        })
 
         // Checkbox changes (delegation)
         document.querySelector('#todo-table tbody').addEventListener('change', (e) => {
@@ -94,6 +100,43 @@ class TaskManager {
         } catch (error) {
             console.error('Error creating task:', error);
             alert('Błąd podczas dodawania zadania');
+        }
+    }
+
+    //create Week Target 
+    async createTarget() {
+        const formData = {
+            name: document.getElementById('target-name').value,
+            parent_task: document.getElementById('parent-task').value || null,
+            description: document.getElementById('description').value,
+            deadline: document.getElementById('deadline-date').value,
+            is_done: false
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/week-targets/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const newTask = await response.json();
+                this.tasks.push(newTask);
+                //this.renderWeekTarget();  NEEDS IMPLEMENTATION
+                this.updateParentTaskDropdown();
+                this.resetForm();
+                alert('Week target dodany!');
+            } else {
+                const text = await response.text();
+                console.error('Create task failed:', response.status, text);
+                alert('Błąd podczas dodawania Week Target');
+            }
+        } catch (error) {
+            console.error('Error creating task:', error);
+            alert('Błąd podczas dodawania Week Target');
         }
     }
 
