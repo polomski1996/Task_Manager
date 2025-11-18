@@ -28,6 +28,13 @@ class TaskViewSet(viewsets.ModelViewSet):
         task.save()
         return Response({'status': 'done toggled', 'is_done': task.is_done})
     
+    @action(detail=True, methods=['get'])
+    def parent_tasks(self, request):
+        """get only parent tasks for the Control Panel """
+        parent_tasks = Task.objects.filter(parent_task__isnull=True)
+        serializer = self.get_serializer(parent_tasks, many=True)
+        return Response(serializer.data)
+    
 class WeekTargetViewSet(viewsets.ModelViewSet):
     queryset = Week_Target.objects.all()
     serializer_class = Week_TargetSerializer

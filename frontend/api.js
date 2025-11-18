@@ -2,12 +2,14 @@ const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
 class TaskManager {
     constructor() {
-        this.tasks = [];
+        this.tasks = []; // table for tasks
+        this.parent_tasks = []; //table for parent tasks
         this.init();
     }
 
     init() {
-        this.loadTasks();
+        this.loadTasks(); // load tasks
+        this.loadParentTasks(); // load parent tasks
         this.setupEventListeners();
     }
 
@@ -24,13 +26,21 @@ class TaskManager {
             this.createTarget();
         })
 
-        // Checkbox changes (delegation)
+        // Checkbox changes (delegation) - for the main table of tasks
         document.querySelector('#todo-table tbody').addEventListener('change', (e) => {
             if (e.target.type === 'checkbox' && e.target.closest('.task-row')) {
                 const taskId = e.target.closest('tr').dataset.taskId;
                 this.toggleTaskDone(taskId);
             }
         });
+
+        // Checkbox changes (delegation) - for Control panel - parent tasks
+        document.querySelector('.parent-tasks').addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox' && e.target.closest('.parent-task-item')) {
+                const taskID = e.target.closest('.parent-task-item').dataset.taskId;
+                this.toggleTaskDone(taskId)
+            }
+        })
 
         // Filter buttons (use arrow to preserve this)
         document.querySelectorAll('.filter-button').forEach(btn => {
@@ -62,6 +72,16 @@ class TaskManager {
             this.updateParentTaskDropdown();
         } catch (error) {
             console.error('Error loading tasks:', error);
+        }
+    }
+
+    async loadParentTasks() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/tasks/parent_tasks/`);
+            this.parent_tasks = await response.json();
+            this.renderParentTasks();
+        } catch (error){
+            console.error('Error while loading parent tasks', error);
         }
     }
 
@@ -149,13 +169,16 @@ class TaskManager {
             if (response.ok) {
                 // opcjonalnie odśwież pojedyncze zadanie lub wszystkie
                 await this.loadTasks();
+                await this.loadParentTasks();
             } else {
                 console.error('Toggle failed', response.status);
                 await this.loadTasks();
+                await this.loadParentTasks();
             }
         } catch (error) {
             console.error('Error toggling task:', error);
             await this.loadTasks(); // reload to sync
+            await this.loadParentTasks();
         }
     }
 
@@ -178,9 +201,52 @@ class TaskManager {
         this.renderFilteredTasks(filtered);
     }
 
-    // Rysuje wszystkie zadania (wywołuje renderFilteredTasks z pełną listą)
+    // Renders/ draws all tasks (wywołuje renderFilteredTasks z pełną listą)
     renderTasks() {
         this.renderFilteredTasks(this.tasks);
+    }
+
+    // Renders/ draws all parent tasks
+    renderParentTasks() {
+        const parentTasksContainer = document.querySelector('.parent-tasks');
+        parentTasksContainer = innerHTML = '';
+
+        if (this.parent_tasks.length === 0) {
+            parentTasksContainer.innerHTML = '<p> NO PARENT TASKS </p>';
+            return;
+        }
+
+        this.parent_tasks.forEach(tasks => {
+            const taskElement = this.createParentTaskElement(task);
+            parentTasksContainer.appendChild(taskElement)
+        });
+    }
+
+    createParentTaskElement(task) {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'parent-task-item';
+        taskDiv.dataset.taskId = task.id;
+
+        // Dodaj klasę jeśli zadanie jest dzisiaj
+        const todayIso = new Date().toISOString().split('T')[0];
+        if (task.date === todayIso) {
+            taskDiv.classList.add('today');
+        }
+
+        taskDiv.innerHTML = `
+            <div class="parent-task-header">
+                <input type="checkbox" ${task.is_done ? 'checked' : ''}>
+                <span class="parent-task-name">${this.escapeHtml(task.name)}</span>
+            </div>
+            <div class="parent-task-details">
+                ${task.acceptance_criteria ? `<p>Kryteria: ${this.escapeHtml(task.acceptance_criteria)}</p>` : ''}
+                ${task.start_hour ? `<p>Godzina: ${this.escapeHtml(task.start_hour)}</p>` : ''}
+                ${task.estimated_time ? `<p>Czas: ${this.escapeHtml(task.estimated_time)}</p>` : ''}
+                ${task.date ? `<p>Data: ${this.escapeHtml(task.date)}</p>` : ''}
+            </div>
+        `;
+
+        return taskDiv;
     }
 
     // Render używany zarówno do pełnych jak i filtrowanych list
