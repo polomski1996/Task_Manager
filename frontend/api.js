@@ -3,7 +3,7 @@ const API_BASE_URL = 'http://127.0.0.1:8000/api';
 class TaskManager {
     constructor() {
         this.tasks = []; // table for tasks
-        this.parent_tasks = []; //table for parent tasks
+        this.parentTasks = []; //table for parent tasks
         this.init();
     }
 
@@ -37,10 +37,10 @@ class TaskManager {
         // Checkbox changes (delegation) - for Control panel - parent tasks
         document.querySelector('.parent-tasks').addEventListener('change', (e) => {
             if (e.target.type === 'checkbox' && e.target.closest('.parent-task-item')) {
-                const taskID = e.target.closest('.parent-task-item').dataset.taskId;
-                this.toggleTaskDone(taskId)
+                const taskId = e.target.closest('.parent-task-item').dataset.taskId; // BYŁO: taskID
+                this.toggleTaskDone(taskId); // BYŁO: taskId
             }
-        })
+        });
 
         // Filter buttons (use arrow to preserve this)
         document.querySelectorAll('.filter-button').forEach(btn => {
@@ -77,11 +77,11 @@ class TaskManager {
 
     async loadParentTasks() {
         try {
-            const response = await fetch(`${API_BASE_URL}/tasks/parent_tasks/`);
-            this.parent_tasks = await response.json();
-            this.renderParentTasks();
-        } catch (error){
-            console.error('Error while loading parent tasks', error);
+        const response = await fetch(`${API_BASE_URL}/tasks/get_parent_tasks/`);
+        this.parentTasks = await response.json();
+        this.renderParentTasks();
+        } catch (error) {
+            console.error('Error loading parent tasks:', error);
         }
     }
 
@@ -209,16 +209,17 @@ class TaskManager {
     // Renders/ draws all parent tasks
     renderParentTasks() {
         const parentTasksContainer = document.querySelector('.parent-tasks');
-        parentTasksContainer = innerHTML = '';
+        parentTasksContainer.innerHTML = ''; // BYŁO: innerHTML = '' - brak parentTasksContainer
 
-        if (this.parent_tasks.length === 0) {
+        if (this.parentTasks.length === 0) { // BYŁO: this.parent_tasks
             parentTasksContainer.innerHTML = '<p> NO PARENT TASKS </p>';
             return;
         }
 
-        this.parent_tasks.forEach(tasks => {
+        // Błąd 3: Zła nazwa zmiennej w pętli
+        this.parentTasks.forEach(task => { // BYŁO: tasks => - powinno być task =>
             const taskElement = this.createParentTaskElement(task);
-            parentTasksContainer.appendChild(taskElement)
+            parentTasksContainer.appendChild(taskElement);
         });
     }
 

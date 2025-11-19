@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from . import views
 from .views import TaskViewSet, WeekTargetViewSet
 
 router = DefaultRouter()
@@ -8,4 +9,5 @@ router.register(r'week-targets', WeekTargetViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    # path('api/get_parent_tasks/', views.TaskViewSet.get_parent_tasks, name='get_parent_tasks'),
 ]
