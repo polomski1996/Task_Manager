@@ -236,14 +236,7 @@ class TaskManager {
 
         taskDiv.innerHTML = `
             <div class="parent-task-header">
-                <input type="checkbox" ${task.is_done ? 'checked' : ''}>
                 <span class="parent-task-name">${this.escapeHtml(task.name)}</span>
-            </div>
-            <div class="parent-task-details">
-                ${task.acceptance_criteria ? `<p>Kryteria: ${this.escapeHtml(task.acceptance_criteria)}</p>` : ''}
-                ${task.start_hour ? `<p>Godzina: ${this.escapeHtml(task.start_hour)}</p>` : ''}
-                ${task.estimated_time ? `<p>Czas: ${this.escapeHtml(task.estimated_time)}</p>` : ''}
-                ${task.date ? `<p>Data: ${this.escapeHtml(task.date)}</p>` : ''}
             </div>
         `;
 

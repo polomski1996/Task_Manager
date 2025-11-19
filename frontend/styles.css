@@ -50,7 +50,7 @@ h1, h3 {
 
 .Control-Panel {
     width: 100%;
-    background-color: blue;
+    background-color: var(--bgc-color);
     display: flex;
     flex-direction: row;
     align-items: stretch; /* Zmienione na stretch aby rozciągnąć elementy */
@@ -58,6 +58,9 @@ h1, h3 {
     gap: var(--spacing-md); /* Zwiększony gap */
     padding: var(--spacing-md);
     min-height: 150px; /* Minimalna wysokość */
+
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-rad);
 }
 
 .week-targets, 
@@ -73,7 +76,7 @@ h1, h3 {
 }
 
 .week-targets { 
-    background-color: red;
+    background-color: var(--bgc-color);
 }
 
 .week-targets h3,
@@ -83,12 +86,28 @@ h1, h3 {
     width: 100%;
 }
 
-.parent-tasks {
-    background-color: green;
+.parent-tasks-Container {
+    background-color: var(--bgc-color);
+}
+
+.parent-task-item {
+    background-color: #242424;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--font-color);
+    border: var(--border-width) solid var(--border-color);
+    padding: 0.35rem .5rem;
+    border-radius: var(--border-rad);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
 }
 
 .button-group {
-    background-color: pink;
+    background-color:var(--bgc-color);
     gap: var(--spacing-sm);
     justify-content: center; /* Dla button group center jest lepsze */
 }
