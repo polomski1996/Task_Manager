@@ -7,9 +7,9 @@ class TaskManager {
         this.init();
     }
 
-    init() {
-        this.loadTasks(); // load tasks
-        this.loadParentTasks(); // load parent tasks
+    async init() {
+        await this.loadParentTasks(); // load parent tasks
+        await this.loadTasks(); // load tasks
         this.setupEventListeners();
     }
 
@@ -119,9 +119,10 @@ class TaskManager {
 
     async loadParentTasks() {
         try {
-        const response = await fetch(`${API_BASE_URL}/tasks/get_parent_tasks/`);
-        this.parentTasks = await response.json();
-        this.renderParentTasks();
+            const response = await fetch(`${API_BASE_URL}/tasks/get_parent_tasks/`);
+            this.parentTasks = await response.json();
+            this.renderParentTasks();
+            this.updateParentTaskDropdown();
         } catch (error) {
             console.error('Error loading parent tasks:', error);
         }
@@ -130,7 +131,7 @@ class TaskManager {
     async createTask() {
         const formData = {
             name: document.getElementById('task-name').value,
-            parent_task: document.getElementById('parent-task').value || null,
+            parent_task: document.getElementById('parent-task-drop').value || null,
             acceptance_criteria: document.getElementById('acceptance-criteria').value,
             start_hour: document.getElementById('start-hour').value,
             estimated_time: document.getElementById('estimated-time').value,
@@ -151,6 +152,7 @@ class TaskManager {
                 const newTask = await response.json();
                 this.tasks.push(newTask);
                 this.renderTasks(); // odśwież widok
+                await this.loadParentTasks();
                 this.updateParentTaskDropdown();
                 this.resetForm();
                 alert('Zadanie zostało dodane!');
@@ -169,7 +171,7 @@ class TaskManager {
     async createTarget() {
         const formData = {
             name: document.getElementById('target-name').value,
-            parent_task: document.getElementById('parent-task').value || null,
+            parent_task: document.getElementById('parent-task-drop').value || null,
             description: document.getElementById('description').value,
             deadline: document.getElementById('deadline-date').value,
             is_done: false
@@ -251,6 +253,9 @@ class TaskManager {
     // Renders/ draws all parent tasks
     renderParentTasks() {
         const parentTasksContainer = document.querySelector('.parent-tasks');
+        if (!parentTasksContainer) return;
+
+
         parentTasksContainer.innerHTML = ''; // BYŁO: innerHTML = '' - brak parentTasksContainer
 
         if (this.parentTasks.length === 0) { // BYŁO: this.parent_tasks
@@ -258,12 +263,14 @@ class TaskManager {
             return;
         }
 
-        // Błąd 3: Zła nazwa zmiennej w pętli
+        
         this.parentTasks.forEach(task => { // BYŁO: tasks => - powinno być task =>
             const taskElement = this.createParentTaskElement(task);
             parentTasksContainer.appendChild(taskElement);
         });
     }
+
+    
 
     createParentTaskElement(task) {
         const taskDiv = document.createElement('div');
@@ -337,17 +344,19 @@ class TaskManager {
     }
 
     updateParentTaskDropdown() {
-        const dropdown = document.getElementById('parent-task');
-        dropdown.innerHTML = '<option value="">Brak (zadanie główne)</option>';
-        this.tasks
-            .filter(task => task.parent_task === null)
-            .forEach(task => {
-                const option = document.createElement('option');
-                option.value = task.id;
-                option.textContent = task.name;
-                dropdown.appendChild(option);
-            });
+        const dropdown = document.getElementById('parent-task-drop');
+        if (!dropdown) return;
+        
+        dropdown.innerHTML = '<option value="">zadanie parent</option>';
+
+        this.parentTasks.forEach(task => {
+            const option = document.createElement('option');
+            option.value = task.id;
+            option.textContent = task.name;
+            dropdown.appendChild(option);
+        });
     }
+
 
     resetForm() {
         document.getElementById('task-form').reset();
