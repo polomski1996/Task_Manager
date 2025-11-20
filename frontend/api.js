@@ -61,6 +61,34 @@ class TaskManager {
             document.body.classList.remove('blured');
             document.querySelector('.task-form-container').classList.add('hidden');
         });
+
+        // Show/hide DEL button on the todo-table table row.
+        const tbody = document.querySelector('#todo-table tbody');
+        tbody.addEventListener('click', (e) => {
+            // find a clicked task
+            const row = e.target.closest('tr.task-row');
+            if (!row) return;
+
+            // znajdź del-btn w tym wierszu
+            const delBtn = row.querySelector('.del-btn');
+            if (delBtn) {
+                delBtn.classList.toggle('hidden');
+            }
+        });
+
+        // Delete task button
+        tbody.addEventListener('click', (e) => {
+            const btn = e.target.closest('.del-btn');
+            if (!btn) return;
+
+            e.stopPropagation();
+
+            const row = btn.closest('tr.task-row');
+            const taskId = row.dataset.taskId;
+
+            this.deleteTask(taskId);
+        });
+
     }
 
     async loadTasks() {
@@ -74,6 +102,20 @@ class TaskManager {
             console.error('Error loading tasks:', error);
         }
     }
+
+    //Delete Task
+    async deleteTask(taskId) {
+        await fetch(`${API_BASE_URL}/tasks/${taskId}/`, {
+            method: 'DELETE'
+        });
+
+        //Remove row from todo-table
+        const row = document.querySelector(`tr[data-task-id="${taskId}"]`);
+        if (row) {
+            row.remove();
+        }
+    }
+
 
     async loadParentTasks() {
         try {
@@ -254,7 +296,7 @@ class TaskManager {
         });
     }
 
-    // helper: tworzy <tr> dla zadania (używane przez obie metody renderujące)
+    // helper: creates <tr> for task (used by both render methods)
     createRow(task) {
         const row = document.createElement('tr');
         row.className = 'task-row';
@@ -274,11 +316,12 @@ class TaskManager {
         row.innerHTML = `
             <td><input type="checkbox" ${task.is_done ? 'checked' : ''}></td>
             <td>${this.escapeHtml(task.name)}</td>
-            <td>${this.escapeHtml(task.parent_task_name || 'N/A')}</td>
+            <td>${this.escapeHtml(task.parent_task_name || 'PARENT')}</td>
             <td>${this.escapeHtml(task.acceptance_criteria || '')}</td>
             <td>${this.escapeHtml(task.start_hour || 'N/A')}</td>
             <td>${this.escapeHtml(task.estimated_time || '')}</td>
             <td>${this.escapeHtml(task.date || '')}</td>
+            <td><button class="hidden del-btn">DEL</button></td>
         `;
         return row;
     }

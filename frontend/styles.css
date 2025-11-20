@@ -186,6 +186,10 @@ h1, h3 {
     cursor: pointer;
 }
 
+#todo-table .del-btn {
+    background-color: rgb(255, 72, 0);
+}
+
 /* ADD TASK FORM */
 .task-form-container {
     position: fixed;
