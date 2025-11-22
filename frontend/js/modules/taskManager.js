@@ -36,6 +36,15 @@ export class TaskManager {
         }
     }
 
+    async loadCurrentWeekTargets() {
+        try {
+            this.weekTargets = await TaskAPI.fetchCurrentWeekTargets();
+            this.renderWeekTargets();
+        } catch (error) {
+            console.error('Error loadign week targets: ', error);
+        }
+    }
+
     async createTask() {
         const formData = {
             name: document.getElementById('task-name').value,

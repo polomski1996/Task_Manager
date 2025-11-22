@@ -1,4 +1,5 @@
 import { escapeHtml } from './utils.js';
+import {getTodayISO } from './utils.js'
 
 export class UIRenderer {
     static renderTasks(tasksArray, containerSelector = '#todo-table tbody') {
@@ -61,7 +62,7 @@ export class UIRenderer {
         taskDiv.className = 'parent-task-item';
         taskDiv.dataset.taskId = task.id;
 
-        const todayIso = new Date().toISOString().split('T')[0];
+        const todayIso = getTodayISO();
         if (task.date === todayIso) {
             taskDiv.classList.add('today');
         }
@@ -87,6 +88,37 @@ export class UIRenderer {
             option.textContent = task.name;
             dropdown.appendChild(option);
         });
+    }
+
+    static renderWeekTargets(weekTargets, containerSelector= '.targets-content') {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (weekTargets.length === 0) {
+            container.innerHTML = '<p>NO WEEK TARGETS!</p>';
+            return
+        }
+
+        weekTargets.forEach(target => {
+            const targetElement = this.createWeekTargetElement(target);
+            container.append(targetElement)
+        })
+    }
+
+    static createWeekTargetElement(target) {
+        const targetDiv = document.createElement('div');
+        targetDiv.className = 'week-target-item';
+        targetDiv.dataset.targetId = target.id;
+
+        targetDiv.innerHTML = `
+            <div class="week-target-header">
+                <span class="week-target-name">${escapeHtml(target.name)}</span>
+            </div>
+        `;
+
+        return targetDiv;
     }
 
     static showForm() {

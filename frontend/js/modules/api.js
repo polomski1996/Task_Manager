@@ -11,6 +11,11 @@ export class TaskAPI {
         return await response.json();
     }
 
+    static async fetchCurrentWeekTargets() {
+        const response = await fetch(`${API_BASE_URL}/week-targets/get_current_weektargets/`)
+        return await response.json();
+    }
+
     static async createTask(taskData) {
         const response = await fetch(`${API_BASE_URL}/tasks/`, {
             method: 'POST',

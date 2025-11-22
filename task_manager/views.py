@@ -6,6 +6,7 @@ from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from .models import Task, Week_Target
 from .serializers import TaskSerializer, Week_TargetSerializer
+from datetime import timedelta, date
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
@@ -42,5 +43,16 @@ class WeekTargetViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Week_Target.objects.all()
-        
         return queryset
+    
+    # get current week targets
+    @action(detail=False, methods=['get'])
+    def get_current_weektargets(self, request):
+        """Dedicated endpoint for current Week targets"""
+        today = date.today()
+        current_week_targets = [
+            el for el in Week_Target.objects.all() #poprawić
+        ]
+        serializer = Week_TargetSerializer(current_week_targets, many=True)
+
+        return Response(serializer.data)
