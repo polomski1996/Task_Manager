@@ -13,58 +13,85 @@
     <div class="container">
         <div class="Control-Panel">
             <!-- WEEKLY TARGETS -->
-            <div class="week-targets">
-                <h3>WEEK TARGETS</h3>
-                <div class="targets-content">
-                    <!-- Tutaj dodaj zawartość progress barów lub innych elementów -->
+            <div class="panel-section">
+                <div class="panel-header">
+                    <h3>WEEK TARGETS</h3>
+                </div>
+                <div class="panel-content">
+                    <table class="panel-table">
+                        <thead>
+                            <tr>
+                                <th>Target Name</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody class="targets-content">
+                            <!-- here week targets will be rendered -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
             <!-- PARENT TASKS -->
-            <div class="parent-tasks-Container">
-                <h3>PARENT TASKS</h3>
-                <div class="parent-tasks">
-                    <!-- here parent tasks will be rendered -->
+            <div class="panel-section">
+                <div class="panel-header">
+                    <h3>PARENT TASKS</h3>
+                </div>
+                <div class="panel-content">
+                    <table class="panel-table">
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                            </tr>
+                        </thead>
+                        <tbody class="parent-tasks">
+                            <!-- here parent tasks will be rendered -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
             <!-- BUTTON GROUP -->
-            <div class="button-group">
-                <button class="filter-button" data-filter="today">Today's Tasks</button>
-                <button class="filter-button" data-filter="all">All Tasks</button>
-                <!-- <button class="filter-button" data-filter="parent">Parent Tasks</button> -->
-                <button class="add-task">Add Task</button>
+            <div class="panel-section button-group-section">
+                <div class="button-group">
+                    <button class="filter-button" data-filter="today">Today's Tasks</button>
+                    <button class="filter-button" data-filter="all">All Tasks</button>
+                    <button class="add-task">Add Task</button>
+                </div>
             </div>
         </div>
 
-        <table id="todo-table">
-            <thead id="todo-head">
-                <tr>
-                    <th>Done</th>
-                    <th>Task Name</th>
-                    <th>Parent Task</th>
-                    <th>Acceptance Criteria</th>
-                    <th>Start Hour</th>
-                    <th>Estimated Time</th>
-                    <th>Date</th> <!-- New column -->
-                </tr>
-            </thead>
-            <tbody>
-                <!-- database rows -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="todo-table">
+                <thead id="todo-head">
+                    <tr>
+                        <th>Done</th>
+                        <th>Task Name</th>
+                        <th>Parent Task</th>
+                        <th>Acceptance Criteria</th>
+                        <th>Start Hour</th>
+                        <th>Estimated Time</th>
+                        <th>Date</th>
+                        <th class="action-column">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- database rows -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <br/>
 
     <!-- adding task form-->
-    <div class="task-form-container hidden" >
+    <div class="task-form-container hidden">
         <!-- ADD TASK FORM -->
         <form id="task-form">
             <h3>Add Task</h3>
-            <div id="inputs" >
+            <div id="inputs">
                 <div>
                     <label>Task Name:</label>
-                    <input type="text" id="task-name" >
+                    <input type="text" id="task-name">
                 </div>
                 <div>
                     <label>Parent Task:</label>
@@ -86,10 +113,10 @@
                 </div>
                 <div>
                     <label>Date:</label>
-                    <input type="date" id="task-date" required >
+                    <input type="date" id="task-date" required>
                 </div>
             </div>
-            <button type="submit" >
+            <button type="submit">
                 Add Task
             </button>
         </form>
@@ -97,10 +124,10 @@
         <!-- ADD WEEK TARGET FORM -->
         <form id="target-form">
             <h3>Add Week Target</h3>
-            <div id="inputs" >
+            <div id="inputs">
                 <div>
                     <label>Target Name:</label>
-                    <input type="text" id="target-name" >
+                    <input type="text" id="target-name">
                 </div>
                 <div>
                     <label>Parent Task:</label>
@@ -114,19 +141,17 @@
                 </div>
                 <div>
                     <label>Deadline:</label>
-                    <input type="date" id="deadline-date" >
+                    <input type="date" id="deadline-date">
                 </div>
             </div>
-            <button type="submit" >
+            <button type="submit">
                 Add Target
             </button>
-            <button type="button" class="finish-add-button" >
+            <button type="button" class="finish-add-button">
                 Quit
             </button>
-            
         </form>
     </div>
-
 
     <script type="module" src="js/main.js"></script>
 </body>

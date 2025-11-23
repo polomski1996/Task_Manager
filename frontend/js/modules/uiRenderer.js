@@ -1,5 +1,5 @@
 import { escapeHtml } from './utils.js';
-import {getTodayISO } from './utils.js'
+import { getTodayISO } from './utils.js'
 
 export class UIRenderer {
     static renderTasks(tasksArray, containerSelector = '#todo-table tbody') {
@@ -11,6 +11,9 @@ export class UIRenderer {
             const row = this.createTaskRow(task);
             tbody.appendChild(row);
         });
+
+        // Add click handlers for rows
+        this.addRowClickHandlers();
     }
 
     static createTaskRow(task) {
@@ -35,9 +38,35 @@ export class UIRenderer {
             <td>${escapeHtml(task.start_hour || 'N/A')}</td>
             <td>${escapeHtml(task.estimated_time || '')}</td>
             <td>${escapeHtml(task.date || '')}</td>
-            <td><button class="hidden del-btn">DEL</button></td>
+            <td><button class="del-btn">DEL</button></td>
         `;
         return row;
+    }
+
+    static addRowClickHandlers() {
+        const rows = document.querySelectorAll('#todo-table tbody tr');
+        rows.forEach(row => {
+            row.addEventListener('click', (e) => {
+                // Don't trigger if clicking on checkbox or delete button
+                if (e.target.type === 'checkbox' || e.target.classList.contains('del-btn')) {
+                    return;
+                }
+                
+                // Remove expanded class from all rows
+                rows.forEach(r => r.classList.remove('expanded'));
+                
+                // Add expanded class to clicked row
+                row.classList.add('expanded');
+            });
+        });
+
+        // Close expanded rows when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#todo-table tbody tr')) {
+                const rows = document.querySelectorAll('#todo-table tbody tr');
+                rows.forEach(row => row.classList.remove('expanded'));
+            }
+        });
     }
 
     static renderParentTasks(parentTasks, containerSelector = '.parent-tasks') {
@@ -47,33 +76,65 @@ export class UIRenderer {
         container.innerHTML = '';
 
         if (parentTasks.length === 0) {
-            container.innerHTML = '<p>NO PARENT TASKS</p>';
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = '<td colspan="1" style="text-align: center; color: #888;">NO PARENT TASKS</td>';
+            container.appendChild(emptyRow);
             return;
         }
 
         parentTasks.forEach(task => {
-            const taskElement = this.createParentTaskElement(task);
-            container.appendChild(taskElement);
+            const row = this.createParentTaskRow(task);
+            container.appendChild(row);
         });
     }
 
-    static createParentTaskElement(task) {
-        const taskDiv = document.createElement('div');
-        taskDiv.className = 'parent-task-item';
-        taskDiv.dataset.taskId = task.id;
+    static createParentTaskRow(task) {
+        const row = document.createElement('tr');
+        row.className = 'parent-task-row';
+        row.dataset.taskId = task.id;
 
         const todayIso = getTodayISO();
         if (task.date === todayIso) {
-            taskDiv.classList.add('today');
+            row.classList.add('today');
         }
 
-        taskDiv.innerHTML = `
-            <div class="parent-task-header">
-                <span class="parent-task-name">${escapeHtml(task.name)}</span>
-            </div>
+        row.innerHTML = `
+            <td>${escapeHtml(task.name)}</td>
         `;
 
-        return taskDiv;
+        return row;
+    }
+
+    static renderWeekTargets(weekTargets, containerSelector = '.targets-content') {
+        const container = document.querySelector(containerSelector);
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (weekTargets.length === 0) {
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = '<td colspan="2" style="text-align: center; color: #888;">NO WEEK TARGETS!</td>';
+            container.appendChild(emptyRow);
+            return;
+        }
+
+        weekTargets.forEach(target => {
+            const row = this.createWeekTargetRow(target);
+            container.appendChild(row);
+        });
+    }
+
+    static createWeekTargetRow(target) {
+        const row = document.createElement('tr');
+        row.className = 'week-target-row';
+        row.dataset.targetId = target.id;
+
+        row.innerHTML = `
+            <td>${escapeHtml(target.name)}</td>
+            <td>${escapeHtml(target.deadline)}</td>
+        `;
+
+        return row;
     }
 
     static updateParentTaskDropdown(parentTasks, dropdownId = 'parent-task-drop') {
@@ -88,37 +149,6 @@ export class UIRenderer {
             option.textContent = task.name;
             dropdown.appendChild(option);
         });
-    }
-
-    static renderWeekTargets(weekTargets, containerSelector= '.targets-content') {
-        const container = document.querySelector(containerSelector);
-        if (!container) return;
-
-        container.innerHTML = '';
-
-        if (weekTargets.length === 0) {
-            container.innerHTML = '<p>NO WEEK TARGETS!</p>';
-            return
-        }
-
-        weekTargets.forEach(target => {
-            const targetElement = this.createWeekTargetElement(target);
-            container.append(targetElement)
-        })
-    }
-
-    static createWeekTargetElement(target) {
-        const targetDiv = document.createElement('div');
-        targetDiv.className = 'week-target-item';
-        targetDiv.dataset.targetId = target.id;
-
-        targetDiv.innerHTML = `
-            <div class="week-target-header">
-                <span class="week-target-name">${escapeHtml(target.name)}</span>
-            </div>
-        `;
-
-        return targetDiv;
     }
 
     static showForm() {
