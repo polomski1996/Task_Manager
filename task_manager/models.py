@@ -27,7 +27,7 @@ class Week_Target(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     tasks = models.ManyToManyField(Task, blank=True)
-    deadline = models.DateTimeField(auto_now=True)
+    deadline = models.DateTimeField(blank=True)
     is_done = models.BooleanField(default=False)
 
     @property

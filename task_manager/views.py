@@ -49,10 +49,17 @@ class WeekTargetViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def get_current_weektargets(self, request):
         """Dedicated endpoint for current Week targets"""
-        today = date.today()
-        current_week_targets = [
-            el for el in Week_Target.objects.all() #poprawić
-        ]
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        today = timezone.now()
+        week_ago = today - timedelta(days=7)
+        
+        # filterring with django ORM
+        current_week_targets = Week_Target.objects.filter(
+            deadline__gte=today,
+            deadline__lte = today + timedelta(days=7)
+        )
         serializer = Week_TargetSerializer(current_week_targets, many=True)
 
         return Response(serializer.data)
