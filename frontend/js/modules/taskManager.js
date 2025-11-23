@@ -13,6 +13,7 @@ export class TaskManager {
     async init() {
         await this.loadParentTasks();
         await this.loadTasks();
+        await this.loadCurrentWeekTargets();
         this.eventHandlers.setupEventListeners();
     }
 
@@ -141,6 +142,10 @@ export class TaskManager {
 
     renderParentTasks() {
         UIRenderer.renderParentTasks(this.parentTasks);
+    }
+
+    renderWeekTargets() {
+        UIRenderer.renderWeekTargets(this.weekTargets);
     }
 
     updateParentTaskDropdown() {

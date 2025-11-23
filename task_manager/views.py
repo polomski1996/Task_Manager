@@ -53,7 +53,7 @@ class WeekTargetViewSet(viewsets.ModelViewSet):
         from datetime import timedelta
         
         today = timezone.now()
-        week_ago = today - timedelta(days=7)
+        week_ago = today - timedelta(days=7) 
         
         # filterring with django ORM
         current_week_targets = Week_Target.objects.filter(
