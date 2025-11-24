@@ -30,6 +30,8 @@ export class TaskManager {
     async loadParentTasks() {
         try {
             this.parentTasks = await TaskAPI.fetchParentTasks();
+            // Inicjalizuj kolory dla parent tasks
+            UIRenderer.initializeParentTaskColors(this.parentTasks);
             this.renderParentTasks();
             this.updateParentTaskDropdown();
         } catch (error) {
@@ -74,7 +76,7 @@ export class TaskManager {
     async createTarget() {
         const formData = {
             name: document.getElementById('target-name').value,
-            parent_task: document.getElementById('parent-target-drop').value || null,
+            parent_task: document.getElementById('parent-target-drop').value,
             description: document.getElementById('description').value,
             deadline: document.getElementById('deadline-date').value,
             is_done: false

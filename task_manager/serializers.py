@@ -25,9 +25,7 @@ class TaskSerializer(serializers.ModelSerializer):
     
 #serializer for Week_Target
 class Week_TargetSerializer(serializers.ModelSerializer):
-    tasks = TaskSerializer(many = True, read_only = True)
-    percent = serializers.ReadOnlyField() #coumputed field
-
+    
     class Meta:
         model = Week_Target
-        fields = ['id', 'name', 'description', 'tasks', 'percent', 'deadline', 'is_done']
+        fields = ['id', 'name', 'parent_task', 'description', 'deadline', 'is_done']
