@@ -14,35 +14,75 @@ export class UIRenderer {
     ];
 
     static parentTaskColors = new Map();
-    static parentTaskNames = new Map(); // Nowa mapa do przechowywania nazw parent tasks
+    static parentTaskNames = new Map();
 
-    // Metoda do przypisania koloru do parent task
-    static getColorForParentTask(parentTaskId, parentTaskName) {
-        if (!parentTaskId) return null;
+    // Inicjalizuj kolory dla wszystkich parent tasks
+    static initializeParentTaskColors(parentTasks) {
+        console.log('Initializing colors for parent tasks:', parentTasks);
+        this.parentTaskColors.clear();
+        this.parentTaskNames.clear();
         
-        // Zapisz nazwę parent task
+        parentTasks.forEach(task => {
+            this.assignColorToParentTask(task.id, task.name);
+        });
+    }
+
+    // Przypisz kolor do parent task - konwertuj ID na number dla konsystencji
+    static assignColorToParentTask(parentTaskId, parentTaskName) {
+        // Konwertuj ID na number dla konsystencji
+        const id = Number(parentTaskId);
+        if (!id) return null;
+        
+        // Zapisz nazwę
         if (parentTaskName) {
-            this.parentTaskNames.set(parentTaskId, parentTaskName);
+            this.parentTaskNames.set(id, parentTaskName);
         }
         
-        // Jeśli już mamy kolor dla tego taska, zwróć go
-        if (this.parentTaskColors.has(parentTaskId)) {
-            return this.parentTaskColors.get(parentTaskId);
+        // Jeśli już mamy kolor, zwróć go
+        if (this.parentTaskColors.has(id)) {
+            return this.parentTaskColors.get(id);
         }
         
-        // Przypisz nowy kolor na podstawie hash nazwy
-        const nameToHash = parentTaskName || parentTaskId.toString();
+        // Użyj zapisanej nazwy jeśli dostępna, w przeciwnym razie ID
+        const nameToHash = this.parentTaskNames.get(id) || id.toString();
         const hash = this.hashString(nameToHash);
         const colorIndex = hash % this.colorPalette.length;
         const color = this.colorPalette[colorIndex];
         
-        this.parentTaskColors.set(parentTaskId, color);
+        this.parentTaskColors.set(id, color);
+        console.log(`Assigned color ${color} to parent task ${id} (${nameToHash})`);
         return color;
     }
 
-    // Metoda do pobrania nazwy parent task po ID
+    // Pobierz kolor dla parent task - konwertuj ID na number
+    static getColorForParentTask(parentTaskId) {
+        // Konwertuj ID na number dla konsystencji
+        const id = Number(parentTaskId);
+        if (!id) return null;
+        
+        // Jeśli kolor już istnieje, zwróć go
+        if (this.parentTaskColors.has(id)) {
+            const color = this.parentTaskColors.get(id);
+            console.log(`Found existing color ${color} for parent task ${id}`);
+            return color;
+        }
+        
+        // Jeśli nie ma koloru, ale znamy nazwę, utwórz kolor
+        const parentTaskName = this.parentTaskNames.get(id);
+        if (parentTaskName) {
+            console.log(`Creating color for known parent task ${id} (${parentTaskName})`);
+            return this.assignColorToParentTask(id, parentTaskName);
+        }
+        
+        // Jeśli nie mamy żadnych informacji, NIE TWÓRZ NOWEGO KOLORA!
+        console.warn(`No color information for parent task ${id} - returning null`);
+        return null;
+    }
+
+    // Metoda do pobrania nazwy parent task po ID - konwertuj ID na number
     static getParentTaskName(parentTaskId) {
-        return this.parentTaskNames.get(parentTaskId) || null;
+        const id = Number(parentTaskId);
+        return this.parentTaskNames.get(id) || null;
     }
 
     // Prosta funkcja hashująca
@@ -87,9 +127,9 @@ export class UIRenderer {
             row.classList.add('today');
         }
 
-        // Pobierz kolor dla parent task - używamy parent_task_name z taska
-        const parentTaskColor = task.parent_task ? 
-            this.getColorForParentTask(task.parent_task, task.parent_task_name) : null;
+        // Pobierz kolor dla parent task
+        const parentTaskColor = this.getColorForParentTask(task.parent_task);
+        console.log(`Task Row: ${task.name}, parent_task: ${task.parent_task}, color: ${parentTaskColor}`);
 
         row.innerHTML = `
             <td><input type="checkbox" ${task.is_done ? 'checked' : ''}></td>
@@ -137,7 +177,8 @@ export class UIRenderer {
             row.classList.add('today');
         }
 
-        const color = this.getColorForParentTask(task.id, task.name);
+        const color = this.getColorForParentTask(task.id);
+        console.log(`Parent Task Row: ${task.name}, color: ${color}`);
 
         row.innerHTML = `
             <td class="parent-task-name" style="color: ${color}; font-weight: 600;">
@@ -172,13 +213,9 @@ export class UIRenderer {
         row.className = 'week-target-row';
         row.dataset.targetId = target.id;
 
-        // Pobierz nazwę parent task z zapisanej mapy
-        const parentTaskName = target.parent_task ? 
-            this.getParentTaskName(target.parent_task) : null;
-        
         // Pobierz kolor dla parent task targetu
-        const color = target.parent_task ? 
-            this.getColorForParentTask(target.parent_task, parentTaskName) : null;
+        const color = this.getColorForParentTask(target.parent_task);
+        console.log(`Week Target Row: ${target.name}, parent_task: ${target.parent_task}, color: ${color}`);
 
         row.innerHTML = `
             <td class="target-name-cell" ${color ? `style="color: ${color}; font-weight: 600;"` : ''}>
@@ -188,13 +225,6 @@ export class UIRenderer {
         `;
 
         return row;
-    }
-
-    // Inicjalizacja kolorów dla istniejących parent tasks
-    static initializeParentTaskColors(parentTasks) {
-        parentTasks.forEach(task => {
-            this.getColorForParentTask(task.id, task.name);
-        });
     }
 
     static addRowClickHandlers() {
