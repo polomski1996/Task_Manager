@@ -151,7 +151,9 @@ h1, h3 {
 }
 
 .filter-button,
-.add-task {
+.add-task,
+.add-target,
+.quit {
     background-color: #242424;
     font-family: var(--font-family);
     font-weight: 500;
@@ -169,7 +171,9 @@ h1, h3 {
 }
 
 .filter-button:hover,
-.add-task:hover {
+.add-task:hover,
+.add-target:hover,
+.quit:hover {
     background-color: rgba(168, 240, 240, 0.1);
     border-color: rgba(231, 240, 235, 0.3);
     transform: translateY(-1px);

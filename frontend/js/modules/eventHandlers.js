@@ -59,7 +59,7 @@ export class EventHandlers {
             UIRenderer.showForm();
         });
 
-        document.querySelector('.finish-add-button').addEventListener('click', () => {
+        document.querySelector('.quit').addEventListener('click', () => {
             UIRenderer.hideForm();
         });
 

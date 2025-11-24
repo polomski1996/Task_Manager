@@ -5,9 +5,14 @@ export class UIRenderer {
     static renderTasks(tasksArray, containerSelector = '#todo-table tbody') {
         const tbody = document.querySelector(containerSelector);
         if (!tbody) return;
+        
+        // sorting tasks from latest one to oldest
+        const sortedTaskArray = [...tasksArray].sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+        });
 
         tbody.innerHTML = '';
-        tasksArray.forEach(task => {
+        sortedTaskArray.forEach(task => {
             const row = this.createTaskRow(task);
             tbody.appendChild(row);
         });
