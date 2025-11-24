@@ -33,7 +33,7 @@ export class UIRenderer {
         row.innerHTML = `
             <td><input type="checkbox" ${task.is_done ? 'checked' : ''}></td>
             <td>${escapeHtml(task.name)}</td>
-            <td>${escapeHtml(task.parent_task_name || 'PARENT')}</td>
+            <td>${escapeHtml(task.parent_task_name || '-')}</td>
             <td>${escapeHtml(task.acceptance_criteria || '')}</td>
             <td>${escapeHtml(task.start_hour || 'N/A')}</td>
             <td>${escapeHtml(task.estimated_time || '')}</td>
@@ -121,7 +121,7 @@ export class UIRenderer {
         weekTargets.forEach(target => {
             const row = this.createWeekTargetRow(target);
             container.appendChild(row);
-        });
+        }); 
     }
 
     static createWeekTargetRow(target) {
@@ -137,17 +137,31 @@ export class UIRenderer {
         return row;
     }
 
-    static updateParentTaskDropdown(parentTasks, dropdownId = 'parent-task-drop') {
-        const dropdown = document.getElementById(dropdownId);
-        if (!dropdown) return;
+    static updateParentTaskDropdown(parentTasks) {
+        // dropdown for tasks
+        const taskDropdown = document.getElementById('parent-task-drop');
+        if (!taskDropdown) return;
         
-        dropdown.innerHTML = '<option value="">zadanie parent</option>';
+        taskDropdown.innerHTML = '<option value="">zadanie parent</option>';
 
         parentTasks.forEach(task => {
             const option = document.createElement('option');
             option.value = task.id;
             option.textContent = task.name;
-            dropdown.appendChild(option);
+            taskDropdown.appendChild(option);
+        });
+
+        // dropdown for targets
+        const targetDropdown = document.getElementById('parent-target-drop');
+        if (!targetDropdown) return;
+        
+        targetDropdown.innerHTML = '<option value="">zadanie parent</option>';
+
+        parentTasks.forEach(task => {
+            const option = document.createElement('option');
+            option.value = task.id;
+            option.textContent = task.name;
+            targetDropdown.appendChild(option);
         });
     }
 

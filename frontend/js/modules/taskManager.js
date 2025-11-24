@@ -61,7 +61,7 @@ export class TaskManager {
             const newTask = await TaskAPI.createTask(formData);
             this.tasks.push(newTask);
             this.renderTasks();
-            await this.loadParentTasks();
+            // await this.loadParentTasks();
             this.updateParentTaskDropdown();
             UIRenderer.resetForm();
             alert('Zadanie zostało dodane!');
@@ -74,7 +74,7 @@ export class TaskManager {
     async createTarget() {
         const formData = {
             name: document.getElementById('target-name').value,
-            parent_task: document.getElementById('parent-task-drop').value || null,
+            parent_task: document.getElementById('parent-target-drop').value || null,
             description: document.getElementById('description').value,
             deadline: document.getElementById('deadline-date').value,
             is_done: false
