@@ -203,7 +203,7 @@ h1, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    display: inline-block;
+    display: inline;
 }
 
 .filter-button:hover,
@@ -242,10 +242,14 @@ h1, h3 {
 #todo-table tbody td {
     height: inherit;
     vertical-align: middle;
-    padding: var(--spacing-sm);
+    padding: 0;
     border-bottom: var(--border-width) solid var(--border-color);
     background-color: transparent;
     word-wrap: break-word;
+}
+
+#todo-table tbody tr td .check-box {
+    height: 13px;
 }
 
 #todo-table th {
@@ -346,7 +350,7 @@ h1, h3 {
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-rad);
     font-family: var(--font-family);
-    margin: 0;
+    margin-bottom: 0;
     padding: var(--spacing-lg);
     backdrop-filter: blur(10px);
     z-index: 1000;
@@ -364,7 +368,7 @@ h1, h3 {
 .task-form-container #task-form #inputs,
 .task-form-container #target-form #inputs {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-lg);
 }
@@ -461,6 +465,15 @@ h1, h3 {
 #todo-table tbody tr td:first-child input[type="checkbox"] {
     margin: 0 auto;
     display: block;
+}
+
+.panel-table th,
+.panel-table td,
+#todo-table th,
+#todo-table td {
+    padding: 0.6rem 0.5rem;   /* identyczne odstępy */
+    line-height: 1.4;         /* wysokość tekstu */
+    height: 44px;             /* wymuszona wysokość wiersza (opcjonalne) */
 }
 
 /* Media Queries for Responsiveness */
