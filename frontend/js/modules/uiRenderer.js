@@ -132,7 +132,7 @@ export class UIRenderer {
         console.log(`Task Row: ${task.name}, parent_task: ${task.parent_task}, color: ${parentTaskColor}`);
 
         row.innerHTML = `
-            <td><input type="checkbox" ${task.is_done ? 'checked' : ''}></td>
+            <td><input class="check-box" type="checkbox" ${task.is_done ? 'checked' : ''}></td>
             <td class="task-name-cell" ${parentTaskColor ? `style="color: ${parentTaskColor}; font-weight: 600;"` : ''}>
                 ${escapeHtml(task.name)}
             </td>
@@ -218,6 +218,7 @@ export class UIRenderer {
         console.log(`Week Target Row: ${target.name}, parent_task: ${target.parent_task}, color: ${color}`);
 
         row.innerHTML = `
+            <td><input class="check-box" type="checkbox" ${target.is_done ? 'checked' : ''}></td>
             <td class="target-name-cell" ${color ? `style="color: ${color}; font-weight: 600;"` : ''}>
                 ${escapeHtml(target.name)}
             </td>

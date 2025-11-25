@@ -10,6 +10,7 @@
     --spacing-sm: .6rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
+    --row-height: 40px;
 }
 
 * {
@@ -71,7 +72,7 @@ h1, h3 {
     border-radius: var(--border-rad);
     overflow: hidden;
 }
-/* Specyficzny styl dla środkowego panelu */
+/* PARENT TASKS- Control panel */
 .panel-section:nth-child(2) {
     text-align: center;
 }
@@ -107,6 +108,23 @@ h1, h3 {
     table-layout: fixed;
 }
 
+/* One height for all panels */
+.panel-table tbody tr {
+    height: var(--row-height);
+    min-height: var(--row-height);
+}
+
+.panel-table tbody td {
+    height: inherit;
+    vertical-align: middle;
+    padding: 0.5rem;
+    border-bottom: var(--border-width) solid var(--border-color);
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .panel-table th {
     background-color: rgba(0, 0, 0, 0.3);
     padding: 0.5rem;
@@ -114,15 +132,8 @@ h1, h3 {
     font-weight: 600;
     border-bottom: var(--border-width) solid var(--border-color);
     white-space: nowrap;
-}
-
-.panel-table td {
-    padding: 0.5rem;
-    border-bottom: var(--border-width) solid var(--border-color);
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    height: 50px;
+    vertical-align: middle;
 }
 
 .panel-table td:hover {
@@ -139,10 +150,23 @@ h1, h3 {
 }
 
 /* SPECIFIC COLUMN WIDTHS FOR PANEL TABLES */
-.panel-section:first-child .panel-table th:nth-child(1) { width: 60%; } /* Target Name */
-.panel-section:first-child .panel-table th:nth-child(2) { width: 40%; } /* Deadline */
+.panel-section:first-child .panel-table th:nth-child(1), 
+.panel-section:first-child .panel-table td:nth-child(1) { 
+    width: 60px;
+    text-align: center;
+}
 
-.panel-section:nth-child(2) .panel-table th:nth-child(1) { width: 100%; } /* Task Name */
+.panel-section:first-child .panel-table th:nth-child(2) { 
+    width: calc(60% - 30px); /* Target Name */
+}
+
+.panel-section:first-child .panel-table th:nth-child(3) { 
+    width: calc(40% - 30px); /* Deadline */
+}
+
+.panel-section:nth-child(2) .panel-table th:nth-child(1) { 
+    width: 100%; /* Task Name */
+}
 
 /* BUTTON GROUP SECTION */
 .button-group-section {
@@ -179,6 +203,7 @@ h1, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+    display: inline-block;
 }
 
 .filter-button:hover,
@@ -208,6 +233,21 @@ h1, h3 {
     table-layout: fixed;
 }
 
+/* HEIGTH FOR MAIN TABLE OF TASKS */
+#todo-table tbody tr {
+    height: var(--row-height);
+    min-height: var(--row-height);
+}
+
+#todo-table tbody td {
+    height: inherit;
+    vertical-align: middle;
+    padding: var(--spacing-sm);
+    border-bottom: var(--border-width) solid var(--border-color);
+    background-color: transparent;
+    word-wrap: break-word;
+}
+
 #todo-table th {
     background-color: rgba(0, 0, 0, 0.2);
     font-weight: 600;
@@ -219,14 +259,8 @@ h1, h3 {
     position: sticky;
     top: 0;
     z-index: 10;
-}
-
-#todo-table td {
-    padding: var(--spacing-sm);
-    border-bottom: var(--border-width) solid var(--border-color);
-    background-color: transparent;
-    vertical-align: top;
-    word-wrap: break-word;
+    height: 50px;
+    vertical-align: middle;
 }
 
 #todo-table tbody tr:last-child td {
@@ -238,12 +272,18 @@ h1, h3 {
     cursor: pointer;
 }
 
+.check-box {
+    background-color: green;
+}
+
 #todo-table tbody tr:hover {
     background-color: rgba(255, 255, 255, 0.08);
 }
 
 #todo-table tbody tr.expanded {
     background-color: rgba(168, 240, 240, 0.05);
+    height: auto;
+    min-height: var(--row-height);
 }
 
 #todo-table input[type="checkbox"] {
@@ -280,8 +320,13 @@ h1, h3 {
     background-color: rgb(220, 60, 0);
 }
 
-/* COLUMN WIDTHS */
-#todo-table th:nth-child(1) { width: 60px; }  /* Done */
+/* COLUMN WIDTHS - POPRAWIONE */
+#todo-table th:nth-child(1),
+#todo-table td:nth-child(1) { 
+    width: 60px; /* Done - MINIMALNA SZEROKOŚĆ */
+    text-align: center;
+}
+
 #todo-table th:nth-child(2) { width: 180px; } /* Task Name */
 #todo-table th:nth-child(3) { width: 120px; } /* Parent Task */
 #todo-table th:nth-child(4) { width: 200px; } /* Acceptance Criteria */
@@ -398,6 +443,26 @@ h1, h3 {
     display: none !important;
 }
 
+/* DODATKOWE STYLE DLA JEDNOLITEJ WYSOKOŚCI */
+.panel-table tbody tr td,
+#todo-table tbody tr td {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* Upewnij się, że zawartość komórek jest właściwie wyśrodkowana */
+.panel-table tbody tr td > *,
+#todo-table tbody tr td > * {
+    vertical-align: middle;
+}
+
+/* Wyśrodkowanie checkboxów */
+.panel-table tbody tr td:first-child input[type="checkbox"],
+#todo-table tbody tr td:first-child input[type="checkbox"] {
+    margin: 0 auto;
+    display: block;
+}
+
 /* Media Queries for Responsiveness */
 
 /* For large desktops */
@@ -419,14 +484,17 @@ h1, h3 {
     }
 }
 
-/* For iPads and smaller tablets (768px - 1023px) */
+/* DOSTOSOWANIA WYSOKOŚCI WIERSZY DLA RÓŻNYCH EKRANÓW */
 @media (min-width: 768px) and (max-width: 949px) {
+    :root {
+        --row-height: 55px;
+    }
+    
     .container {
         padding: var(--spacing-md);
     }
     
     .Control-Panel {
-        flex-direction: column;
         gap: var(--spacing-sm);
     }
     
@@ -444,13 +512,17 @@ h1, h3 {
     }
     
     .button-group {
-        flex-direction: row;
+        flex-direction: column;
         max-width: 100%;
     }
 }
 
 /* For smaller tablets and larger phones (600px - 767px) */
 @media (min-width: 600px) and (max-width: 767px) {
+    :root {
+        --row-height: 50px;
+    }
+    
     body {
         padding: var(--spacing-xs);
     }
@@ -494,6 +566,10 @@ h1, h3 {
 
 /* For mobile devices (up to 599px) */
 @media (max-width: 599px) {
+    :root {
+        --row-height: 45px;
+    }
+    
     body {
         padding: 0.5rem;
         align-items: stretch;
@@ -562,6 +638,10 @@ h1, h3 {
 
 /* For very small mobile devices (up to 375px) */
 @media (max-width: 375px) {
+    :root {
+        --row-height: 40px;
+    }
+    
     body {
         padding: 0.25rem;
     }

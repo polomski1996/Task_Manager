@@ -30,15 +30,6 @@ class Week_Target(models.Model):
     deadline = models.TextField(blank=True)
     is_done = models.BooleanField(default=False)
 
-    # @property
-    # def count_percent(self, tasks):
-    #     # counting the percent of finishing Week_Target
-    #     tasks = self.tasks.all()
-    #     if not tasks: return 0
-
-    #     done_tasks = sum(1 for task in tasks if task.is_done)
-    #     return (done_tasks / len(tasks)) * 100
-
     def __str__(self):
         return self.name
     

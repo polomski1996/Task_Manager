@@ -38,6 +38,13 @@ export class TaskAPI {
         return await response.json();
     }
 
+    static async toggleTargetDone(targetId) {
+        const response = await fetch(`${API_BASE_URL}/week-targets/${targetId}/toggle_done/`, {
+            method: 'POST'
+        });
+        return response.ok;
+    }
+
     static async toggleTaskDone(taskId) {
         const response = await fetch(`${API_BASE_URL}/tasks/${taskId}/toggle_done/`, {
             method: 'POST'

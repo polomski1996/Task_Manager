@@ -94,6 +94,18 @@ export class TaskManager {
         }
     }
 
+    async toggleTargetDone(targetId) {
+        try {
+            await TaskAPI.toggleTargetDone(targetId);
+            await this.loadCurrentWeekTargets();
+            await this.loadParentTasks();
+        } catch (error) {
+            console.error('Error toggiling target', error);
+            await this.loadCurrentWeekTargets();
+            await this.loadParentTasks();
+        }
+    }
+
     async toggleTaskDone(taskId) {
         try {
             await TaskAPI.toggleTaskDone(taskId);

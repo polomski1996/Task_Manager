@@ -63,3 +63,10 @@ class WeekTargetViewSet(viewsets.ModelViewSet):
         serializer = Week_TargetSerializer(current_week_targets, many=True)
 
         return Response(serializer.data)
+    
+    @action(detail=True, methods=['post'])
+    def toggle_done(self, request, pk=None):
+        target = self.get_object()
+        target.is_done = not target.is_done
+        target.save()
+        return Response({'status': 'done toggled', 'is_done': target.is_done})

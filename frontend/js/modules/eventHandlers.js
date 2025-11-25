@@ -36,6 +36,14 @@ export class EventHandlers {
             }
         });
 
+        //Target table checkboxes
+        document.querySelector('.panel-section tbody').addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox' && e.target.closest('.week-target-row')) {
+                const targetId = e.target.closest('tr').dataset.targetId;
+                this.taskManager.toggleTargetDone(targetId);
+            }
+        })
+
         // Parent tasks checkboxes
         document.querySelector('.parent-tasks').addEventListener('change', (e) => {
             if (e.target.type === 'checkbox' && e.target.closest('.parent-task-item')) {
