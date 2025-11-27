@@ -8,6 +8,6 @@ router.register(r'tasks', TaskViewSet)
 router.register(r'week-targets', WeekTargetViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     # path('api/get_parent_tasks/', views.TaskViewSet.get_parent_tasks, name='get_parent_tasks'),
 ]

@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('task_manager.urls'))
+    # path('', include('task_manager.urls'))
+        # API
+    path('api/', include('task_manager.urls')),  # <-- MUSI być
+    path('', TemplateView.as_view(template_name="index.html")),
 ]
