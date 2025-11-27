@@ -1,2 +1,2 @@
 web: gunicorn Task_Manager.wsgi
-release: python manage.py collectstatic --noinput
+release: python3 manage.py collectstatic --noinput
