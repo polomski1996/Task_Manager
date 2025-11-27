@@ -1,4 +1,4 @@
-import { TaskManager } from "/modules/taskManager.js";
+import { TaskManager } from "./modules/taskManager.js";
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
