@@ -258,7 +258,7 @@ h1, h3 {
     height: 20px;
     border: 2px solid var(--border-color);
     border-radius: 4px;
-    background-color: rgb(197, 116, 49); /* Szare tło przed zaznaczeniem */
+    background-color: rgb(173, 173, 173); /* Szare tło przed zaznaczeniem */
     cursor: pointer;
     transition: all 0.3s ease;
 }
