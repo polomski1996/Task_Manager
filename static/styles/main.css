@@ -10,7 +10,7 @@
     --spacing-sm: .6rem;
     --spacing-md: 1.5rem;
     --spacing-lg: 2rem;
-    --row-height: 40px;
+    --row-height: 33px;
 }
 
 * {
@@ -116,13 +116,12 @@ h1, h3 {
 
 .panel-table tbody td {
     height: inherit;
+    line-height: 1.4em;
     vertical-align: middle;
-    padding: 0.5rem;
+    padding: 0;
     border-bottom: var(--border-width) solid var(--border-color);
+    background-color: transparent;
     word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .panel-table th {
@@ -241,6 +240,7 @@ h1, h3 {
 
 #todo-table tbody td {
     height: inherit;
+    line-height: 1.4em;
     vertical-align: middle;
     padding: 0;
     border-bottom: var(--border-width) solid var(--border-color);
@@ -248,9 +248,48 @@ h1, h3 {
     word-wrap: break-word;
 }
 
-#todo-table tbody tr td .check-box {
-    height: 13px;
+/* CHECKBOX STYLES */
+#todo-table tbody tr td .check-box,
+.panel-table tr td .check-box {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background-color: rgb(197, 116, 49); /* Szare tło przed zaznaczeniem */
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+#todo-table tbody tr td .check-box:checked,
+.panel-table tr td .check-box:checked {
+    background-color: var(--bgc-color); /* Niebieskie tło po zaznaczeniu */
+    border-color: var(--border-color);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 14px;
+}
+
+/* DROPDOWN PARENT TASK STYLES */
+.task-form-container #task-form #inputs #parent-task-drop,
+.task-form-container #target-form #inputs #parent-target-drop{
+    padding: 10px 15px;
+    border: var(--border-width) solid var(--border-color);
+    background-color: var(--bgc-color);
+    color: var(--font-color);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234a5568'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='4' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
 
 #todo-table th {
     background-color: rgba(0, 0, 0, 0.2);
