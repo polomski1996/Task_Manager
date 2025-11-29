@@ -2,15 +2,13 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
+load_dotenv()
+
+
+
 print("DEBUG ENV:", os.getenv("DEBUG"))
 print("SETTINGS:", os.getenv("DJANGO_SETTINGS_MODULE"))
-
-
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -47,7 +45,7 @@ ROOT_URLCONF = 'Task_Manager.urls'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],   # <-- to musi być
+        "DIRS": ["templates"],   # <-- to musi być
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

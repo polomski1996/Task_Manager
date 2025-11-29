@@ -18,7 +18,7 @@ export class UIRenderer {
 
     // Inicjalizuj kolory dla wszystkich parent tasks
     static initializeParentTaskColors(parentTasks) {
-        console.log('Initializing colors for parent tasks:', parentTasks);
+        // console.log('Initializing colors for parent tasks:', parentTasks);
         this.parentTaskColors.clear();
         this.parentTaskNames.clear();
         
@@ -50,7 +50,7 @@ export class UIRenderer {
         const color = this.colorPalette[colorIndex];
         
         this.parentTaskColors.set(id, color);
-        console.log(`Assigned color ${color} to parent task ${id} (${nameToHash})`);
+        // console.log(`Assigned color ${color} to parent task ${id} (${nameToHash})`);
         return color;
     }
 
@@ -63,14 +63,14 @@ export class UIRenderer {
         // Jeśli kolor już istnieje, zwróć go
         if (this.parentTaskColors.has(id)) {
             const color = this.parentTaskColors.get(id);
-            console.log(`Found existing color ${color} for parent task ${id}`);
+            // console.log(`Found existing color ${color} for parent task ${id}`);
             return color;
         }
         
         // Jeśli nie ma koloru, ale znamy nazwę, utwórz kolor
         const parentTaskName = this.parentTaskNames.get(id);
         if (parentTaskName) {
-            console.log(`Creating color for known parent task ${id} (${parentTaskName})`);
+            // console.log(`Creating color for known parent task ${id} (${parentTaskName})`);
             return this.assignColorToParentTask(id, parentTaskName);
         }
         
@@ -129,7 +129,7 @@ export class UIRenderer {
 
         // Pobierz kolor dla parent task
         const parentTaskColor = this.getColorForParentTask(task.parent_task);
-        console.log(`Task Row: ${task.name}, parent_task: ${task.parent_task}, color: ${parentTaskColor}`);
+        // console.log(`Task Row: ${task.name}, parent_task: ${task.parent_task}, color: ${parentTaskColor}`);
 
         row.innerHTML = `
             <td><input class="check-box" type="checkbox" ${task.is_done ? 'checked' : ''}></td>
@@ -178,7 +178,7 @@ export class UIRenderer {
         }
 
         const color = this.getColorForParentTask(task.id);
-        console.log(`Parent Task Row: ${task.name}, color: ${color}`);
+        // console.log(`Parent Task Row: ${task.name}, color: ${color}`);
 
         row.innerHTML = `
             <td class="parent-task-name" style="color: ${color}; font-weight: 600;">
@@ -215,7 +215,7 @@ export class UIRenderer {
 
         // Pobierz kolor dla parent task targetu
         const color = this.getColorForParentTask(target.parent_task);
-        console.log(`Week Target Row: ${target.name}, parent_task: ${target.parent_task}, color: ${color}`);
+        // console.log(`Week Target Row: ${target.name}, parent_task: ${target.parent_task}, color: ${color}`);
 
         row.innerHTML = `
             <td><input class="check-box" type="checkbox" ${target.is_done ? 'checked' : ''}></td>
