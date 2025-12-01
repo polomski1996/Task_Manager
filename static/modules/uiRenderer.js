@@ -3,14 +3,12 @@ import { getTodayISO } from './utils.js'
 
 export class UIRenderer {
     static colorPalette = [
-        '#FF6B6B', // Czerwony
-        '#4ECDC4', // Turkusowy
-        '#FFD166', // Żółty
-        '#06D6A0', // Zielony
-        '#118AB2', // Niebieski
-        '#EF476F', // Różowy
+        '#fa4040ff', // Czerwony
+        '#44ebe0ff', // Turkusowy
+        '#fdfa2fff', // Żółty
+        '#38967dff', // Zielony
         '#7209B7', // Fioletowy
-        '#F48C06'  // Pomarańczowy
+        '#e28409ff'  // Pomarańczowy
     ];
 
     static parentTaskColors = new Map();
