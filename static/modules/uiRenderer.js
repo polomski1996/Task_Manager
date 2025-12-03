@@ -3,20 +3,18 @@ import { getTodayISO } from './utils.js'
 
 export class UIRenderer {
     static colorPalette = [
-        '#fa4040ff', // Czerwony
-        '#44ebe0ff', // Turkusowy
-        '#fdfa2fff', // Żółty
-        '#38967dff', // Zielony
-        '#7209B7', // Fioletowy
-        '#e28409ff'  // Pomarańczowy
+        '#fa4040ff',
+        '#44ebe0ff',
+        '#fdfa2fff',
+        '#38967dff',
+        '#7209B7',
+        '#e28409ff'
     ];
 
     static parentTaskColors = new Map();
     static parentTaskNames = new Map();
 
-    // Inicjalizuj kolory dla wszystkich parent tasks
     static initializeParentTaskColors(parentTasks) {
-        // console.log('Initializing colors for parent tasks:', parentTasks);
         this.parentTaskColors.clear();
         this.parentTaskNames.clear();
         
@@ -25,43 +23,41 @@ export class UIRenderer {
         });
     }
 
-    // Przypisz kolor do parent task - konwertuj ID na number dla konsystencji
+    // Assign collor to parent task
     static assignColorToParentTask(parentTaskId, parentTaskName) {
-        // Konwertuj ID na number dla konsystencji
+        // Convert ID to a number- for consistency
         const id = Number(parentTaskId);
         if (!id) return null;
         
-        // Zapisz nazwę
+        // save the name
         if (parentTaskName) {
             this.parentTaskNames.set(id, parentTaskName);
         }
         
-        // Jeśli już mamy kolor, zwróć go
+        // if we have a color- return it
         if (this.parentTaskColors.has(id)) {
             return this.parentTaskColors.get(id);
         }
         
-        // Użyj zapisanej nazwy jeśli dostępna, w przeciwnym razie ID
+        // use saved name if it's available
         const nameToHash = this.parentTaskNames.get(id) || id.toString();
         const hash = this.hashString(nameToHash);
         const colorIndex = hash % this.colorPalette.length;
         const color = this.colorPalette[colorIndex];
         
         this.parentTaskColors.set(id, color);
-        // console.log(`Assigned color ${color} to parent task ${id} (${nameToHash})`);
         return color;
     }
 
-    // Pobierz kolor dla parent task - konwertuj ID na number
+    // Get color for parent task and convert it.
     static getColorForParentTask(parentTaskId) {
-        // Konwertuj ID na number dla konsystencji
+        // Convert id to number- for consintency
         const id = Number(parentTaskId);
         if (!id) return null;
         
-        // Jeśli kolor już istnieje, zwróć go
+        //If color already exist- return it
         if (this.parentTaskColors.has(id)) {
             const color = this.parentTaskColors.get(id);
-            // console.log(`Found existing color ${color} for parent task ${id}`);
             return color;
         }
         
